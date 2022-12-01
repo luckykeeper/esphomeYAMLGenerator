@@ -1,0 +1,8 @@
+Website = "https://luckykeeper.site"
+
+[Details]
+  Icon = "cocoa.ico"
+  Name = "esphomeYAMLGenerator"
+  ID = "cocoagenerator.luckykeeper.site"
+  Version = "1.0.0"
+  Build = 1

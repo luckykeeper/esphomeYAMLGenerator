@@ -1,0 +1,70 @@
+substitutions:
+  device_name: "cocoaGenerator"
+
+esphome:
+  name: ${device_name}
+  platformio_options:
+    board_build.flash_mode: dio
+    board_build.mcu: esp32c3
+
+esp32:
+  board: esp32-c3-devkitm-1
+  variant: esp32c3
+  framework:
+    type: arduino
+    version: 2.0.2
+    platform_version: https://github.com/tasmota/platform-espressif32/releases/download/v2.0.2.3/platform-espressif32-2.0.2.3.zip
+
+external_components:
+  - source: github://myhomeiot/esphome-components
+
+logger:
+
+api:
+  password: "cocoaApiPassword"
+
+ota:
+  password: "cocoaOtaPassword"
+
+#configuration:https://esphome.io/components/wifi.html
+wifi:
+  ssid: "cocoaWifiName"
+  password: "cocoaWifiPassword"
+
+  # Optional manual IP
+  manual_ip:
+    static_ip: cocoaDeviceIp
+    gateway: cocoaDeviceGateway
+    subnet: cocoaDeviceNetmask
+    dns1: cocoaDeviceDns
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "CocoaFallback"
+    password: "CocoaEsp32!"
+
+web_server:
+  port: 80
+  auth:
+    username: "cocoawebUser"
+    password: "cocoawebPassword"
+
+button:
+  - platform: restart
+    name: ${device_name}_reboot
+  
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+  
+uart:
+  id: ${device_name}_uart
+  rx_pin: 18
+  tx_pin: 19
+  baud_rate: 9600
+  data_bits: 8
+  stop_bits: 1
+
+modbus:
+  id: ${device_name}_modbus
+  send_wait_time: 200ms

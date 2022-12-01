@@ -1,0 +1,55 @@
+# ESP-IDF
+esphome:
+    name: "cocoaGenerator"
+    platformio_options:
+      board_build.flash_mode: dio
+      board_build.mcu: esp32c3
+esp32:
+    board: esp32-c3-devkitm-1
+    variant: esp32c3
+    framework:
+      type: esp-idf
+
+external_components:
+  - source: github://myhomeiot/esphome-components
+
+logger:
+
+api:
+  password: "cocoaApiPassword"
+
+ota:
+  password: "cocoaOtaPassword"
+
+#configuration:https://esphome.io/components/wifi.html
+wifi:
+  ssid: "cocoaWifiName"
+  password: "cocoaWifiPassword"
+
+  # Optional manual IP
+  manual_ip:
+    static_ip: cocoaDeviceIp
+    gateway: cocoaDeviceGateway
+    subnet: cocoaDeviceNetmask
+    dns1: cocoaDeviceDns
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "CocoaFallback"
+    password: "CocoaEsp32!"
+
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+  
+uart:
+  id: ${device_name}_uart
+  rx_pin: 18
+  tx_pin: 19
+  baud_rate: 9600
+  data_bits: 8
+  stop_bits: 1
+
+modbus:
+  id: ${device_name}_modbus
+  send_wait_time: 200ms
